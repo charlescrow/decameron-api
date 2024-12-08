@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AcommodationRoom extends Model
+class AccommodationRoom extends Model
 {
     /**
      * The attributes that are mass assignable.

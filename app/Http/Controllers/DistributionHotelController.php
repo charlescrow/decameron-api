@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccommodationRoom;
+use App\Models\DistributionHotel;
+use App\Models\Hotel;
+use App\Models\TypeRoom;
 use Illuminate\Http\Request;
 
 class DistributionHotelController extends Controller
@@ -11,15 +15,11 @@ class DistributionHotelController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return DistributionHotel::with(
+            'hotel',
+            'typeRoom',
+            'accommodationRoom'
+        )->get(); 
     }
 
     /**
@@ -27,15 +27,36 @@ class DistributionHotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insert = DistributionHotel::create($request->all());
+
+        // mensaje de respuesta en caso de no registrar.
+        $respuesta = [
+            'type' => 'error',
+            'msg' =>  'Error al guardar, intenta más tarde.'
+        ];
+
+        if ($insert) {
+            $respuesta = [
+                'type' => 'success',
+                'msg' =>  'Guardado con éxito.'
+            ];
+        }
+        return $respuesta;
     }
 
+
     /**
-     * Display the specified resource.
+     * Trae la información respecto a los 2 select requeridos.
+     * 
+     * @return array
      */
-    public function show(string $id)
+    public function getInfoSelect()
     {
-        //
+        return [
+            'type_room' => TypeRoom::get(),
+            'accommodation_room' => AccommodationRoom::get(),
+            'hotels' => Hotel::get()
+        ];
     }
 
     /**
