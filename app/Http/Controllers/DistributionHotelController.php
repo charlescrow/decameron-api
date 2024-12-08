@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DistributionHotelRequest;
 use App\Models\AccommodationRoom;
 use App\Models\DistributionHotel;
 use App\Models\Hotel;
@@ -23,9 +24,12 @@ class DistributionHotelController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Registro de una nueva distribución
+     * 
+     * @param App\Http\Requests\DistributionHotelRequest reglas de validación
+     * @return array respuesta de la petición
      */
-    public function store(Request $request)
+    public function store(DistributionHotelRequest $request)
     {
         $insert = DistributionHotel::create($request->all());
 
