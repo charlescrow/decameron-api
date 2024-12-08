@@ -19,4 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'hotels', 'as' => 'hotels.'], function () {
+    Route::get('/list', [HotelController::class, 'index'])->name('list');
+    Route::post('/store', [HotelController::class, 'store'])->name('store');
+});
+
+Route::get('/csrf-token', function () {
+    dd(csrf_token());
+    return response()->json(['csrfToken' => csrf_token()]);
+});
+
 
