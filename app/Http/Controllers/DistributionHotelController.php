@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DistributionHotelRequest;
+use App\Models\AccommodationRoom;
+use App\Models\DistributionHotel;
+use App\Models\Hotel;
+use App\Models\TypeRoom;
 use Illuminate\Http\Request;
 
 class DistributionHotelController extends Controller
@@ -11,31 +16,51 @@ class DistributionHotelController extends Controller
      */
     public function index()
     {
-        //
+        return DistributionHotel::with(
+            'hotel',
+            'typeRoom',
+            'accommodationRoom'
+        )->get(); 
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Registro de una nueva distribución
+     * 
+     * @param App\Http\Requests\DistributionHotelRequest reglas de validación
+     * @return array respuesta de la petición
      */
-    public function create()
+    public function store(DistributionHotelRequest $request)
     {
-        //
+        $insert = DistributionHotel::create($request->all());
+
+        // mensaje de respuesta en caso de no registrar.
+        $respuesta = [
+            'type' => 'error',
+            'msg' =>  'Error al guardar, intenta más tarde.'
+        ];
+
+        if ($insert) {
+            $respuesta = [
+                'type' => 'success',
+                'msg' =>  'Guardado con éxito.'
+            ];
+        }
+        return $respuesta;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
-     * Display the specified resource.
+     * Trae la información respecto a los 2 select requeridos.
+     * 
+     * @return array
      */
-    public function show(string $id)
+    public function getInfoSelect()
     {
-        //
+        return [
+            'type_room' => TypeRoom::get(),
+            'accommodation_room' => AccommodationRoom::get(),
+            'hotels' => Hotel::get()
+        ];
     }
 
     /**

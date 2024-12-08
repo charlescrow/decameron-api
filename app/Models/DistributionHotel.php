@@ -15,6 +15,34 @@ class DistributionHotel extends Model
         'hotel_id',
         'number_room',
         'type_room_id',
-        'acommodation_room_id'
+        'accommodation_room_id'
     ];
+
+    /**
+     * Relación con la tabla Hotel uno a uno
+     * @return relation
+     */
+    public function hotel()
+    {
+        return $this->hasOne(Hotel::class, 'id', 'hotel_id');
+        
+    }
+
+    /**
+     * Relación con la tabla TypeRoom uno a uno
+     * @return relation
+     */
+    public function typeRoom()
+    {
+        return $this->hasOne(TypeRoom::class, 'id', 'type_room_id');
+    }
+
+    /**
+     * Relación con la tabla accommodationRoom uno a uno
+     * @return relation
+     */
+    public function accommodationRoom()
+    {
+        return $this->hasOne(AccommodationRoom::class, 'id', 'accommodation_room_id');
+    }
 }
