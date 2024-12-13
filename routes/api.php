@@ -3,6 +3,7 @@
 use App\Http\Controllers\DistributionHotelController;
 use App\Http\Controllers\HotelController;
 use App\Models\AccommodationRoom;
+use App\Models\DistributionHotel;
 use App\Models\TypeRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'hotels', 'as' => 'hotels.'], function () {
     Route::get('/list', [HotelController::class, 'index'])->name('list');
     Route::post('/store', [HotelController::class, 'store'])->name('store');
+    Route::get('/edit/{hotel}', [HotelController::class, 'edit'])->name('edit');
+    Route::patch('/update/{hotel}', [HotelController::class, 'update'])->name('update');
 });
 
 /** Rutas Distribución Hotel */
