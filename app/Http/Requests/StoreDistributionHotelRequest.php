@@ -6,7 +6,7 @@ use App\Models\DistributionHotel;
 use App\Models\Hotel;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DistributionHotelRequest extends FormRequest
+class StoreDistributionHotelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,10 @@ class DistributionHotelRequest extends FormRequest
      */
     public function availableRooms()
     {
-        $totalRooms = DistributionHotel::where(['hotel_id' => 1])->sum('number_room');
+        $totalRooms = DistributionHotel::where(['hotel_id' => $this->hotel_id])
+            ->sum('number_room');
         $maxRooms = Hotel::find($this->input('hotel_id'))->number_room;
+        
         return $maxRooms - $totalRooms;
     }
 

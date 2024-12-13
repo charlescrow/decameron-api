@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DistributionHotel extends Model
 {
+
+    // protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
      *

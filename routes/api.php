@@ -26,6 +26,8 @@ Route::group(['prefix' => 'distribution', 'as' => 'distribution.'], function () 
     Route::get('/list', [DistributionHotelController::class, 'index'])->name('list');
     Route::get('/get-info-select', [DistributionHotelController::class, 'getInfoSelect'])->name('get-info-select');
     Route::post('/store', [DistributionHotelController::class, 'store'])->name('store');
+    Route::get('/edit/{distributionHotel}', [DistributionHotelController::class, 'edit'])->name('edit');
+    Route::patch('/update/{distributionHotel}', [DistributionHotelController::class, 'update'])->name('update');
 });
 
 Route::get('/csrf-token', function () {

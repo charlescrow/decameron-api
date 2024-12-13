@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DistributionHotelRequest;
+use App\Http\Requests\StoreDistributionHotelRequest;
+use App\Http\Requests\UpdateDistributionHotelRequest;
 use App\Models\AccommodationRoom;
 use App\Models\DistributionHotel;
 use App\Models\Hotel;
@@ -29,7 +30,7 @@ class DistributionHotelController extends Controller
      * @param App\Http\Requests\DistributionHotelRequest reglas de validación
      * @return array respuesta de la petición
      */
-    public function store(DistributionHotelRequest $request)
+    public function store(StoreDistributionHotelRequest $request)
     {
         $insert = DistributionHotel::create($request->all());
 
@@ -66,17 +67,41 @@ class DistributionHotelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(DistributionHotel $distributionHotel)
     {
-        //
+        $respuesta = [
+            'type' => 'error',
+            'msg' =>  'Error al cargar la información, intenta más tarde.'
+        ];
+
+        if ($distributionHotel) {
+            $respuesta = [
+                'type' => 'success',
+                'data' =>  $distributionHotel
+            ];
+        }
+        return $respuesta;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateDistributionHotelRequest $request, DistributionHotel $distributionHotel)
     {
-        //
+        return "Hola";
+        $respuesta = [
+            'type' => 'error',
+            'msg' =>  'Error al cargar la información, intenta más tarde.'
+        ];
+
+        $update = $distributionHotel->update(['number_room' => $request->number_room]);
+        if ($update) {
+            $respuesta = [
+                'type' => 'success',
+                'msg' =>  'Actualizado con éxito.'
+            ];
+        }
+        return $respuesta;
     }
 
     /**
