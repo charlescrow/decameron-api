@@ -22,7 +22,8 @@ class StoreHotelRequest extends FormRequest
             'city.required' => 'La ciudad es requerida',
             'number_room.required' => 'El número de habitaciones es requerido',
             'address.required' => 'La dirección es requerida',
-            'nit.required' => 'El NIT es requerido'
+            'nit.required' => 'El NIT es requerido',
+            'nit.unique' => 'El NIT ya se encuentra registrado'
         ];
     }
 
@@ -38,7 +39,7 @@ class StoreHotelRequest extends FormRequest
             'city' => 'required',
             'number_room' => 'required | numeric',
             'address' => 'required',
-            'nit' => 'required | numeric'
+            'nit' => 'required|numeric|unique:hotels,nit'
         ];
     }
 }

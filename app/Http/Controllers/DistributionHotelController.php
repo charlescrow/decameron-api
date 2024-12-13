@@ -88,7 +88,6 @@ class DistributionHotelController extends Controller
      */
     public function update(UpdateDistributionHotelRequest $request, DistributionHotel $distributionHotel)
     {
-        return "Hola";
         $respuesta = [
             'type' => 'error',
             'msg' =>  'Error al cargar la información, intenta más tarde.'

@@ -33,12 +33,17 @@ class StoreDistributionHotelRequest extends FormRequest
     public function messages()
     {
         $availableRooms = $this->availableRooms();
+        $mensaje = 'El Hotel no cuenta con habitaciones disponibles para distribuir.';
+        if ($availableRooms > 0) {
+            $mensaje = "Las habitaciones no deben exceder las disponibles para distribuir ({$availableRooms})";
+        }
+
         return [
             'hotel_id.required' => 'El campo Hotel es obligatorio.',
             'hotel_id.unique' => 'La acomodación de este tipo de habitación ya existe para este Hotel',
             'accommodation_room_id.required' => 'La acomodación es obligatoria.',
             'type_room_id.required' => 'Tipo de habitación es obligatorio.',
-            'number_room.max' => "Las habitaciones no deben exceder las disponibles para distribuir ({$availableRooms})"
+            'number_room.max' => $mensaje
         ];
     }
 
@@ -53,7 +58,7 @@ class StoreDistributionHotelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'hotel_id' => 'required|unique:distribution_hotels,type_room_id,NULL,id,accommodation_room_id,' . $this->accommodation_room_id,
+            'hotel_id' => 'required|unique:distribution_hotels,hotel_id,NULL,id,type_room_id,' . $this->type_room_id . ',accommodation_room_id,' . $this->accommodation_room_id,
             'number_room' =>  "required|numeric|max:{$this->availableRooms()}",
             'type_room_id' => 'required|numeric',
             'accommodation_room_id' => 'required|numeric'
